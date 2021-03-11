@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SoftIran.Application.Services.IService;
 using SoftIran.Application.ViewModels;
+using SoftIran.Application.ViewModels.Identity.Claims;
 using SoftIran.Application.ViewModels.Identity.User.Cmd;
 using SoftIran.Application.ViewModels.Identity.User.Query;
 using SoftIran.DataLayer.Models.Context;
@@ -17,6 +18,7 @@ using SoftIran.Insfrastrcture;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -143,6 +145,23 @@ namespace SoftIran.Application.Services
                 await _userManager.RemoveFromRolesAsync(user, roles);
                 await _userManager.AddToRolesAsync(user, request.Roles);
 
+                // removing all user claims
+                var userClaims = await _userManager.GetClaimsAsync(user);
+                var removeClaim = await _userManager.RemoveClaimsAsync(user, userClaims);
+                if (!removeClaim.Succeeded)
+                    throw new BusinessLogicException("خطای ناشناخته ای رخ داده است");
+
+                // add claims to user
+                var claims = ClaimStore.AllClaims.Where(x => request.Claims.Contains(x.Type)).ToList();
+                foreach (var claim in claims)
+                {
+                    var resultAddition = await _userManager.AddClaimAsync(user, claim);
+                    if (!resultAddition.Succeeded)
+                        throw new BusinessLogicException("خطای ناشناخته ای رخ داده است");
+                }
+
+
+
                 var result = await _userManager.UpdateAsync(user);
 
                 if (!result.Succeeded)
@@ -169,6 +188,17 @@ namespace SoftIran.Application.Services
                 user.Id = Guid.NewGuid().ToString();
                 //  user.UserName = request.UserName;
                 // user.PasswordHash = request.Password;
+
+                // add claims to user
+                var claims = ClaimStore.AllClaims.Where(x => request.Claims.Contains(x.Type)).ToList();
+                foreach (var claim in claims)
+                {
+                    var resultAddition = await _userManager.AddClaimAsync(user, claim);
+                    if (!resultAddition.Succeeded)
+                        throw new BusinessLogicException("خطای ناشناخته ای رخ داده است");
+                }
+
+
                 var res = await _userManager.CreateAsync(user, request.Password);
 
                 if (!res.Succeeded)
@@ -206,6 +236,7 @@ namespace SoftIran.Application.Services
 
             var userRoles = await _userManager.GetRolesAsync(user);
             var userRole = userRoles.FirstOrDefault();
+            var userClaims = await _userManager.GetClaimsAsync(user);
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
@@ -230,7 +261,19 @@ namespace SoftIran.Application.Services
                 Message = "success",
                 Data = new AuthenticationToken
                 {
-                    Token = tokenHandler.WriteToken(token)
+                    Token = tokenHandler.WriteToken(token),
+                    FirstName = user.FirstName,
+                    LastName=user.LastName,
+                    FullName = $"{user.FirstName} {user.LastName}",
+
+                    UserId = user.Id,
+                    UserName = user.UserName,
+
+                    Avatar = user.Avatar ,
+                    
+
+                    Roles = userRoles,
+                    Claims = userClaims.Select(c => c.Type).ToList()
                 },
             };
 
@@ -286,7 +329,42 @@ namespace SoftIran.Application.Services
 
             };
         }
+
         #endregion
 
+        #region upload avatar
+
+        public async Task<Response<UploadAvatarUserDto>> UploadAvatar(IFormFile file)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == _httpContext.GetUserId());
+            var directory = Directory.GetParent(Environment.CurrentDirectory).ToString();
+            var uploadPath = Path.Combine(directory, "Upload", "Avatar");
+            if (!Directory.Exists(uploadPath))
+            {
+                Directory.CreateDirectory(uploadPath);
+            }
+
+            var completeName = Guid.NewGuid().ToString()
+                             .Replace("-", string.Empty).Replace("+", string.Empty) + ".jpg";
+
+            await using var fileStream = new FileStream(Path.Combine(uploadPath, completeName), FileMode.Create, FileAccess.Write);
+
+            file.CopyTo(fileStream);
+            fileStream.Flush();
+            user.Avatar = completeName;
+            await _context.SaveChangesAsync();
+
+            return new Response<UploadAvatarUserDto>
+            {
+                Status = true,
+                Data = new UploadAvatarUserDto
+                {
+                    Name = completeName,
+                    Url = completeName.FileUrl()
+                }
+            };
+           
+        } 
+        #endregion#
     }
 }

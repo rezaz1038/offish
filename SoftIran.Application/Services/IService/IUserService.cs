@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace SoftIran.Application.Services.IService
 {
@@ -21,5 +22,6 @@ namespace SoftIran.Application.Services.IService
         Task<Response> ResetPassword(ResetPasswordCmd request);
         Task<Response<AuthenticationToken>> LoginUser(LoginCmd request);
 
+        Task<Response<UploadAvatarUserDto>> UploadAvatar(IFormFile file);
     }
 }

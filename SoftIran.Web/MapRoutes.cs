@@ -43,6 +43,7 @@ namespace SoftIran.Web
             public const string Upsert = BaseUrl + "/identity/user/upsert";
             public const string Delete = BaseUrl + "/identity/user/{request}";
             public const string Single = BaseUrl + "/identity/user/{request}";
+            public const string UploadAvatar = BaseUrl + "/identity/user/avatar";
 
             public const string Login = BaseUrl + "/identity/user/login";
             public const string ResetPassword = BaseUrl + "/identity/user/password/reset";

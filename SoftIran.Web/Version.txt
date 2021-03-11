@@ -711,3 +711,45 @@ api/v{version:apiVersion}/department/upsert
 api/v{version:apiVersion}/department/{request}
 api/v{version:apiVersion}/department/list
 
+1399/12/20 => 22:4
+==============Department.List===============
+api/v{version:apiVersion}/department/{request}
+api/v{version:apiVersion}/department/upsert
+api/v{version:apiVersion}/department/{request}
+api/v{version:apiVersion}/department/list
+
+1399/12/20 => 22:5
+==============Department.List===============
+api/v{version:apiVersion}/department/{request}
+api/v{version:apiVersion}/department/upsert
+api/v{version:apiVersion}/department/{request}
+api/v{version:apiVersion}/department/list
+
+1399/12/20 => 22:6
+==============Department.List===============
+api/v{version:apiVersion}/department/{request}
+api/v{version:apiVersion}/department/upsert
+api/v{version:apiVersion}/department/{request}
+api/v{version:apiVersion}/department/list
+
+1399/12/20 => 22:6
+==============Department.List===============
+api/v{version:apiVersion}/department/{request}
+api/v{version:apiVersion}/department/upsert
+api/v{version:apiVersion}/department/{request}
+api/v{version:apiVersion}/department/list
+
+1399/12/21 => 0:47
+==============Department.List===============
+api/v{version:apiVersion}/department/{request}
+api/v{version:apiVersion}/department/upsert
+api/v{version:apiVersion}/department/{request}
+api/v{version:apiVersion}/department/list
+
+1399/12/21 => 1:4
+==============Department.List===============
+api/v{version:apiVersion}/department/{request}
+api/v{version:apiVersion}/department/upsert
+api/v{version:apiVersion}/department/{request}
+api/v{version:apiVersion}/department/list
+

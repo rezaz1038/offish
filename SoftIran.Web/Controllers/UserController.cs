@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SoftIran.Application.Services.IService;
 using SoftIran.Application.ViewModels;
@@ -230,6 +231,38 @@ namespace SoftIran.Web.Controllers
             try
             {
                 var result = await _service.ChangePassword(request);
+                return Ok(result);
+
+            }
+            catch (BusinessLogicException ex)
+            {
+                return BadRequest(new Response
+                {
+                    Status = false,
+                    Message = ex.Message
+                });
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new Response
+                {
+                    Status = false,
+                    Message = ErrorMessages.UnkownError
+                    //e.Message 
+                });
+            }
+        }
+        #endregion
+
+        #region uploadAvatar
+         [HttpPost]
+         [Route(MapRoutes.User.UploadAvatar)]
+        public async Task<IActionResult> UploadAvatar( IFormFile request)
+        {
+            try
+            {
+                var result = await _service.UploadAvatar(request);
                 return Ok(result);
 
             }
