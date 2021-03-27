@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using SoftIran.Application.Services.IService;
 using SoftIran.Application.ViewModels;
 using SoftIran.Application.ViewModels.EquipmentPlace.Query;
@@ -25,6 +26,8 @@ namespace SoftIran.Web.Controllers
         #region upsert
         [HttpPost]
         [Route(MapRoutes.Equipment.Place.Upsert)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpsertEquipmentPlace([FromBody] UpsertEquipmentPlaceCmd request)
         {
             try
@@ -55,6 +58,8 @@ namespace SoftIran.Web.Controllers
 
         #region delete
         [HttpDelete(MapRoutes.Equipment.Place.Delete)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Delete([FromRoute] string request)
         {
             try
@@ -87,6 +92,9 @@ namespace SoftIran.Web.Controllers
 
         [HttpGet]
         [Route(MapRoutes.Equipment.Place.List)]
+        [ProducesResponseType(typeof(Response<EquipmentPlacesDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
+
         public async Task<IActionResult> ListEquipmentPlaces([FromQuery] EquipmentPlacesQuery request)
         {
             try
@@ -122,6 +130,8 @@ namespace SoftIran.Web.Controllers
         #region get  single
         [HttpGet]
         [Route(MapRoutes.Equipment.Place.Single)]
+        [ProducesResponseType(typeof(Response<EquipmentPlaceDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SingleEquipmentPlace([FromRoute] string request)
         {
             try

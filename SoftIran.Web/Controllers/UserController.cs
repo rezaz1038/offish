@@ -30,6 +30,8 @@ namespace SoftIran.Web.Controllers
 
         [HttpGet]
         [Route(MapRoutes.User.List)]
+        [ProducesResponseType(typeof(Response<UsersDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ListUsers([FromQuery] UsersQuery request)
         {
             try
@@ -65,6 +67,8 @@ namespace SoftIran.Web.Controllers
         #region upsert
         [HttpPost]
         [Route(MapRoutes.User.Upsert)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpsertUser([FromBody] UpsertUserCmd request)
         {
             try
@@ -96,6 +100,8 @@ namespace SoftIran.Web.Controllers
 
         #region delete
         [HttpDelete(MapRoutes.User.Delete)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> DeleteUser([FromRoute] string request)
         {
             try
@@ -127,6 +133,8 @@ namespace SoftIran.Web.Controllers
         #region get  single
         [HttpGet]
         [Route(MapRoutes.User.Single)]
+        [ProducesResponseType(typeof(Response<UserDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SingleUser([FromRoute] string request)
         {
             try
@@ -161,6 +169,8 @@ namespace SoftIran.Web.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route(MapRoutes.User.Login)]
+        [ProducesResponseType(typeof(Response<AuthenticationToken>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Login ([FromBody] LoginCmd request) 
         {
             try
@@ -194,6 +204,8 @@ namespace SoftIran.Web.Controllers
         #region reset password
         [HttpPost]
         [Route(MapRoutes.User.ResetPassword)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ResetPasswordUser([FromBody] ResetPasswordCmd request)
         {
             try
@@ -226,6 +238,8 @@ namespace SoftIran.Web.Controllers
         #region change password
         [HttpPost]
         [Route(MapRoutes.User.ChangePassword)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordCmd request)
         {
             try
@@ -258,6 +272,8 @@ namespace SoftIran.Web.Controllers
         #region uploadAvatar
          [HttpPost]
          [Route(MapRoutes.User.UploadAvatar)]
+        [ProducesResponseType(typeof(Response<UploadAvatarUserDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UploadAvatar( IFormFile request)
         {
             try

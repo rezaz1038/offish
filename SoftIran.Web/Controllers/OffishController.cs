@@ -25,6 +25,8 @@ namespace SoftIran.Web.Controllers
         #region upsert register
         [HttpPost]
         [Route(MapRoutes.Offish.Upsert.register)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ActionRegister([FromBody] UpsertActionRegisterCmd request)
         {
             try

@@ -27,6 +27,8 @@ namespace SoftIran.Web.Controllers
         #region upsert
         [HttpPost]
         [Route(MapRoutes.PGM.Upsert)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpsertPgm([FromBody] UpsertPgmCmd request)
         {
             try
@@ -57,6 +59,8 @@ namespace SoftIran.Web.Controllers
 
         #region delete
         [HttpDelete(MapRoutes.PGM.Delete)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Delete([FromRoute] string request)
         {
             try
@@ -89,6 +93,8 @@ namespace SoftIran.Web.Controllers
 
         [HttpGet]
         [Route(MapRoutes.PGM.List)]
+        [ProducesResponseType(typeof(Response<PgmsDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ListPgms([FromQuery] PgmsQuery request)
         {
             try
@@ -125,6 +131,8 @@ namespace SoftIran.Web.Controllers
         #region get  single
         [HttpGet]
         [Route(MapRoutes.PGM.Single)]
+        [ProducesResponseType(typeof(Response<PgmDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SinglePgm([FromRoute] string request)
         {
             try

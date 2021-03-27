@@ -29,6 +29,8 @@ namespace SoftIran.Web.Controllers
         #region upsert
         [HttpPost]
         [Route(MapRoutes.Department.Upsert)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response),StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpsertDepartment([FromBody] UpsertDepartmentCmd request)
         {
             try
@@ -62,6 +64,8 @@ namespace SoftIran.Web.Controllers
 
         [HttpGet]
         [Route(MapRoutes.Department.List)]
+        [ProducesResponseType(typeof(Response<DepartmentsDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ListDepartments([FromQuery] DepartmentsQuery request)
         {
             try
@@ -93,6 +97,8 @@ namespace SoftIran.Web.Controllers
         #region get department
         [HttpGet]
         [Route(MapRoutes.Department.Single)]
+        [ProducesResponseType(typeof(Response<DepartmentDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SingleDepartment([FromRoute] string request)
         {
             try
@@ -123,6 +129,9 @@ namespace SoftIran.Web.Controllers
 
         #region delete
         [HttpDelete(MapRoutes.Department.Delete)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
+
         public async Task<ActionResult> Delete([FromRoute] string request)
         {
             try

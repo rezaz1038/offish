@@ -27,6 +27,8 @@ namespace SoftIran.Web.Controllers
         #region upsert
         [HttpPost]
         [Route(MapRoutes.Offish.Category.Upsert)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpsertCategory([FromBody]UpsertOffishCategoryCmd request)
         {
             try
@@ -57,6 +59,8 @@ namespace SoftIran.Web.Controllers
 
         #region delete
         [HttpDelete(MapRoutes.Offish.Category.Delete)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Delete([FromRoute] string request)
         {
             try
@@ -89,6 +93,8 @@ namespace SoftIran.Web.Controllers
 
         [HttpGet]
         [Route(MapRoutes.Offish.Category.List)]
+        [ProducesResponseType(typeof(Response<OffishCategoriesDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> List([FromQuery] OffishCategoriesQuery request)
         {
             try
@@ -125,6 +131,8 @@ namespace SoftIran.Web.Controllers
         #region get  single
         [HttpGet]
         [Route(MapRoutes.Offish.Category.Single)]
+        [ProducesResponseType(typeof(Response<OffishCategoryDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Single([FromRoute] string request)
         {
             try

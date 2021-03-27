@@ -753,3 +753,17 @@ api/v{version:apiVersion}/department/upsert
 api/v{version:apiVersion}/department/{request}
 api/v{version:apiVersion}/department/list
 
+1400/01/07 => 13:8
+==============Department.List===============
+api/v{version:apiVersion}/department/{request}
+api/v{version:apiVersion}/department/upsert
+api/v{version:apiVersion}/department/{request}
+api/v{version:apiVersion}/department/list
+
+1400/01/07 => 13:13
+==============Department.List===============
+api/v{version:apiVersion}/department/{request}
+api/v{version:apiVersion}/department/upsert
+api/v{version:apiVersion}/department/{request}
+api/v{version:apiVersion}/department/list
+

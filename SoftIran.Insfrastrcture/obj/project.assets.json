@@ -7551,23 +7551,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\rmyt\\.nuget\\packages\\": {},
+    "C:\\Users\\z3\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rmyt\\Desktop\\project\\ASP.netCore\\offish\\SoftIran.Insfrastrcture\\SoftIran.Insfrastrcture.csproj",
+      "projectUniqueName": "C:\\Users\\z3\\Desktop\\offish\\offish\\SoftIran.Insfrastrcture\\SoftIran.Insfrastrcture.csproj",
       "projectName": "SoftIran.Insfrastrcture",
-      "projectPath": "C:\\Users\\rmyt\\Desktop\\project\\ASP.netCore\\offish\\SoftIran.Insfrastrcture\\SoftIran.Insfrastrcture.csproj",
-      "packagesPath": "C:\\Users\\rmyt\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rmyt\\Desktop\\project\\ASP.netCore\\offish\\SoftIran.Insfrastrcture\\obj\\",
+      "projectPath": "C:\\Users\\z3\\Desktop\\offish\\offish\\SoftIran.Insfrastrcture\\SoftIran.Insfrastrcture.csproj",
+      "packagesPath": "C:\\Users\\z3\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\z3\\Desktop\\offish\\offish\\SoftIran.Insfrastrcture\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\rmyt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\z3\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -7663,7 +7663,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }

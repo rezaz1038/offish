@@ -139,6 +139,15 @@ namespace SoftIran.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseCors(x =>
+                {
+                    x.AllowAnyHeader();
+                    x.AllowAnyOrigin ();
+                    x.AllowAnyMethod();
+                     
+                }) ; 
+
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
