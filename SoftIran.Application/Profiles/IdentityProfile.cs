@@ -1,5 +1,6 @@
 ﻿
 using AutoMapper;
+using SoftIran.Application.ViewModels.Department.Query;
 using SoftIran.Application.ViewModels.Identity.User.Cmd;
 using SoftIran.Application.ViewModels.Identity.User.Query;
 using SoftIran.DataLayer.Models.Entities;
@@ -17,9 +18,10 @@ namespace SoftIran.Application.Profiles
         {
             CreateMap<UpsertUserCmd, ApplicationUser>()
                 .ForMember(dest => dest.Roles, opt => opt.Ignore());
-               
-            CreateMap<ApplicationUser, UserDto>()
-                .ForMember(dest => dest.DepartmentId, opt => opt.MapFrom(x => x.Department.Id));
+
+            CreateMap<ApplicationUser, UserDto>();
+
+            CreateMap<Department, DepartmentDto>();
         }
 
     }

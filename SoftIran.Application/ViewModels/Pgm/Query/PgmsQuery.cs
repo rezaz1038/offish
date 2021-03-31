@@ -13,7 +13,7 @@ namespace SoftIran.Application.ViewModels.Pgm.Query
         [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonProperty("departmentId")]
-        public string DepartmentId { get; set; }
+        [JsonProperty("departmentName")]
+        public string DepartmentName { get; set; }
     }
 }

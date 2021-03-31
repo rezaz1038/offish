@@ -11,6 +11,6 @@ namespace SoftIran.DataLayer.Models.Entities
         public string Name { get; set; }
 
         public ICollection<ApplicationUser>  Users { get; set; }
-        public ICollection<PGM>   PGMs { get; set; }
+        public ICollection<PGM> PGMs { get; set; }
     }
 }

@@ -15,8 +15,7 @@ namespace SoftIran.Application.Services.IService
         Task<Response> DeleteRole(string request);
         Task<Response<RoleDto>> GetRole(string request);
         Task<Response<RolesDto>> GetRoles(RolesQuery request);
-        
-
+        Task<Response<RolesDtoWithoutPagenated>> GetRolesAll(RolesQuery request);
 
     }
 }

@@ -9,7 +9,9 @@ namespace SoftIran.DataLayer.Models.Entities
     public class PGM:TEntity
     {
         public string Name { get; set; }
+
         public string  DepartmentId { get; set; }
+        public Department Department { get; set; }
         public ICollection<Offish>  Offishes { get; set; }
     }
 }

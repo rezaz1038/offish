@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SoftIran.Application.Services.IService;
 using SoftIran.Application.ViewModels;
+using SoftIran.Application.ViewModels.Department.Query;
 using SoftIran.Application.ViewModels.Pgm.Cmd;
 using SoftIran.Application.ViewModels.Pgm.Query;
 using SoftIran.DataLayer.Models.Context;
@@ -92,18 +93,32 @@ namespace SoftIran.Application.Services
         public async Task<Response<PgmDto>> GetPgm(string request)
         {
             var item = await _context.PGMs.SingleOrDefaultAsync(x => x.Id == request);
+            var itemDepartment = 
+                await _context.Departments.SingleOrDefaultAsync(x => x.Id == item.DepartmentId);
+
             if (item == null)
             {
                 throw new BusinessLogicException("رکوردی یافت نشد");
             }
+
+            if (itemDepartment == null)
+            {
+                throw new BusinessLogicException("دپارتمانی   یافت نشد");
+            }
+
+            var resultDepartment = new DepartmentDto
+            {
+                Id = itemDepartment.Id,
+                Name = itemDepartment.Name
+            };
 
             var result = new PgmDto 
 
             {
                 Id = item.Id,
                 Name = item.Name,
-                DepartmentId=item.DepartmentId
-                
+                Department= resultDepartment
+
             };
 
             return new Response<PgmDto>
@@ -121,18 +136,20 @@ namespace SoftIran.Application.Services
         #region Get Pgms
         public async Task<Response<PgmsDto>> GetPgms(PgmsQuery request)
         {
-            var result = _context.PGMs.AsQueryable();
+            var result = _context.PGMs.Include(x => x.Department).AsQueryable();
+
 
             if (!string.IsNullOrEmpty(request.Name))
             {
                 result = result.Where(x => x.Name.Contains(request.Name));
             }
 
-            if (!string.IsNullOrEmpty(request.DepartmentId))
+            if (!string.IsNullOrEmpty(request.DepartmentName))
             {
-                result = result.Where(x => x.Name.Contains(request.DepartmentId));
+           
+                result = result.Where(x => x.Department.Name.Contains(request.DepartmentName));
             }
-
+            
 
 
             ///pagenating
@@ -145,7 +162,9 @@ namespace SoftIran.Application.Services
 
 
             //----------------
-
+            //var resultDepartment=await 
+           
+           
 
             var resultData = new PgmsDto
             {
@@ -153,7 +172,11 @@ namespace SoftIran.Application.Services
                 {
                     Id = d.Id,
                     Name = d.Name,
-                    DepartmentId=d.DepartmentId
+                    Department= new DepartmentDto
+                    {
+                        Id = d.Department.Id,
+                        Name = d.Department.Name
+                    }
                 }).ToListAsync(),
                 PageId = request.PageId,
                 PageSize = request.PageSize,

@@ -8,7 +8,8 @@ namespace SoftIran.Web
     public static class MapRoutes
     {
 
-        private const string BaseUrl = "api" + "/" + "v{version:apiVersion}";
+        // private const string BaseUrl = "api" + "/" + "v{version:apiVersion}";
+        private const string BaseUrl = "api" + "/" + "v1";
 
         public static class Department
         {
@@ -30,6 +31,8 @@ namespace SoftIran.Web
 
         public static class Role
         {
+            
+            public const string ListAll = BaseUrl + "/identity/role/list/all";
             public const string List = BaseUrl + "/identity/role/list";
             public const string Upsert = BaseUrl + "/identity/role/upsert";
             public const string Delete = BaseUrl + "/identity/role/{request}";
@@ -43,6 +46,7 @@ namespace SoftIran.Web
             public const string Upsert = BaseUrl + "/identity/user/upsert";
             public const string Delete = BaseUrl + "/identity/user/{request}";
             public const string Single = BaseUrl + "/identity/user/{request}";
+            public const string SingleModel = BaseUrl + "/identity/user/model/{request}";
             public const string UploadAvatar = BaseUrl + "/identity/user/avatar";
 
             public const string Login = BaseUrl + "/identity/user/login";
@@ -96,7 +100,7 @@ namespace SoftIran.Web
             public static class Upsert
             {
                 public const string register = BaseUrl + "/offish/upsert/register";
-                public const string Upshert = BaseUrl + "/offish/category/upsert";
+                public const string UpsertUrl = BaseUrl + "/offish/category/upsert";
                 public const string Delete = BaseUrl + "/offish/category/{request}";
                 public const string Single = BaseUrl + "/offish/category/{request}";
             }

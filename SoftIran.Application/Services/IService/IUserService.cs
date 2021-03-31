@@ -17,6 +17,7 @@ namespace SoftIran.Application.Services.IService
 
         Task<Response<UsersDto>> GetUsers(UsersQuery request);
         Task<Response<UserDto>> GetUser(string id);
+ 
 
         Task<Response> ChangePassword(ChangePasswordCmd request);
         Task<Response> ResetPassword(ResetPasswordCmd request);

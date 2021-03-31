@@ -63,6 +63,44 @@ namespace SoftIran.Web.Controllers
         }
         #endregion
 
+        #region list all
+
+        [HttpGet]
+        [Route(MapRoutes.Role.ListAll)]
+        [ProducesResponseType(typeof(Response<RolesDtoWithoutPagenated>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ListRolesAll([FromQuery] RolesQuery request)
+        {
+            try
+            {
+                var result = await _service.GetRolesAll(request);
+                return Ok(result);
+            }
+            catch (BusinessLogicException ex)
+            {
+                return BadRequest(new Response
+                {
+                    Status = false,
+                    Message = ex.Message
+                });
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new Response
+                {
+                    Status = false,
+                    Message = ErrorMessages.UnkownError
+                });
+            }
+
+
+
+
+
+        }
+        #endregion
+
         #region upsert
         [HttpPost]
         [Route(MapRoutes.Role.Upsert)]

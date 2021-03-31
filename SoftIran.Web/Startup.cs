@@ -116,10 +116,12 @@ namespace SoftIran.Web
             services.AddApiVersioning(x =>
             {
                x.DefaultApiVersion = new ApiVersion(1, 0);
-               x.AssumeDefaultVersionWhenUnspecified = false;
-               x.ReportApiVersions = true;
+               x.AssumeDefaultVersionWhenUnspecified = true;
+               x.ReportApiVersions = false;
+             //  x.UseApiBehavior = false;
                x.ApiVersionReader = new HeaderApiVersionReader("x-api-version");
             });
+
              #endregion
 
 

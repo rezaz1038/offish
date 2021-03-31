@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SoftIran.Application.ViewModels.Department.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,11 @@ namespace SoftIran.Application.ViewModels.Pgm.Query
         [JsonProperty("Name")]
         public string Name { get; set; }
 
-        [JsonProperty("DepartmentId")]
-        public string DepartmentId { get; set; }
+
+        [JsonProperty("department")]
+        public DepartmentDto Department { get; set; }
     }
+
 }
 
 

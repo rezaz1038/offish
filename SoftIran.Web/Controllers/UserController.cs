@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace SoftIran.Web.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiVersion("1.0")]
     [ApiExplorerSettings(GroupName = "v1")]
     [ApiController]
@@ -162,6 +162,8 @@ namespace SoftIran.Web.Controllers
 
 
         }
+
+ 
         #endregion
 
 

@@ -131,6 +131,45 @@ namespace SoftIran.Application.Services
         }
         #endregion
 
+        #region List WithoutPagning
+        public async Task<Response<RolesDtoWithoutPagenated>> GetRolesAll(RolesQuery request)
+        {
+            var result = _roleManager.Roles.AsQueryable();
+            if (!string.IsNullOrEmpty(request.Name))
+            {
+                result = result.Where(x => x.Name.Contains(request.Name));
+            }
+
+            ///pagenating
+            int take = request.PageSize;
+            int skip = (request.PageId - 1) * take;
+
+            int totalPages = (int)Math.Ceiling(result.Count() / (double)take);
+
+            var finalResult = result.OrderBy(x => x.Name).Skip(skip).Take(take).AsQueryable();
+            //----------------
+
+            var resultData = new RolesDtoWithoutPagenated
+            {
+                Dtos = await finalResult.Select(r => new RoleDto
+                {
+                    Id = r.Id,
+                    Name = r.Name
+                }).ToListAsync() 
+
+                 
+            };
+
+            return new Response<RolesDtoWithoutPagenated>
+            {
+                Data = resultData,
+                Status = true,
+                Message = "success"
+
+            };
+        }
+        #endregion
+
         #region upsert
         public async Task<Response> UpsertRole(UpsertRoleCmd request)
         {

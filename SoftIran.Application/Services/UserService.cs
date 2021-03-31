@@ -91,6 +91,8 @@ namespace SoftIran.Application.Services
         }
         #endregion
 
+ 
+
         #region GetUsers
         public async Task<Response<UsersDto>> GetUsers(UsersQuery request)
         {
@@ -149,7 +151,7 @@ namespace SoftIran.Application.Services
                 var userClaims = await _userManager.GetClaimsAsync(user);
                 var removeClaim = await _userManager.RemoveClaimsAsync(user, userClaims);
                 if (!removeClaim.Succeeded)
-                    throw new BusinessLogicException("خطای ناشناخته ای رخ داده است");
+                    throw new BusinessLogicException("خطای ناشناخته ای رخ داده است claims");
 
                 // add claims to user
                 var claims = ClaimStore.AllClaims.Where(x => request.Claims.Contains(x.Type)).ToList();
@@ -157,7 +159,7 @@ namespace SoftIran.Application.Services
                 {
                     var resultAddition = await _userManager.AddClaimAsync(user, claim);
                     if (!resultAddition.Succeeded)
-                        throw new BusinessLogicException("خطای ناشناخته ای رخ داده است");
+                        throw new BusinessLogicException("user خطای ناشناخته ای رخ داده است");
                 }
 
 

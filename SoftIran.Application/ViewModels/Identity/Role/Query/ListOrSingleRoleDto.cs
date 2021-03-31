@@ -12,6 +12,11 @@ namespace SoftIran.Application.ViewModels.Identity.Role.Query
         public ICollection<RoleDto> Dtos { get; set; }
     }
 
+    public class RolesDtoWithoutPagenated 
+    {
+        public ICollection<RoleDto> Dtos { get; set; }
+    }
+
     public class RoleDto
     {
         [JsonProperty("id")]
