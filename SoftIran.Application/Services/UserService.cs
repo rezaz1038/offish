@@ -184,20 +184,26 @@ namespace SoftIran.Application.Services
                     throw new BusinessLogicException("این نام کاربری استفاده شده است. نام کاربری دیگری را امتحان کنید");
                 }
                 // user = await result.ProjectTo<ApplicationUser>(_mapper.ConfigurationProvider).First();
-                user = _mapper.Map<ApplicationUser>(request);
-                // user = _mapper.Map(request, user);
-                user.Department = department;
+                //user = _mapper.Map<ApplicationUser>(request);
+                //  user = _mapper.Map(request, user);
+                user.FirstName = request.FirstName;
+                user.Code = request.Code;
+                user.LastName = request.LastName;
+                
+                await _userManager.AddToRolesAsync(user, request.Roles);
+
+                user.Department= department;
                 user.Id = Guid.NewGuid().ToString();
-                //  user.UserName = request.UserName;
+                // user.UserName = request.UserName;
                 // user.PasswordHash = request.Password;
 
                 // add claims to user
                 var claims = ClaimStore.AllClaims.Where(x => request.Claims.Contains(x.Type)).ToList();
                 foreach (var claim in claims)
-                {
+                { 
                     var resultAddition = await _userManager.AddClaimAsync(user, claim);
                     if (!resultAddition.Succeeded)
-                        throw new BusinessLogicException("خطای ناشناخته ای رخ داده است");
+                        throw new BusinessLogicException("خطای ناشناخته ای رخ داده است claims");
                 }
 
 

@@ -1,4 +1,7 @@
 ﻿using Newtonsoft.Json;
+using SoftIran.Application.ViewModels.EquipmentBrand.Query;
+using SoftIran.Application.ViewModels.EquipmentPlace.Query;
+using SoftIran.Application.ViewModels.EquipmentType.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,15 +45,14 @@ namespace SoftIran.Application.ViewModels.Equipment.Query
         [JsonProperty("description")]
         public string Description { get; set; }
 
-        [JsonProperty("placeId")]
-        public string PlaceId { get; set; }
+        [JsonProperty("place")]
+        public EquipmentPlaceDto Place { get; set; }
 
-        [JsonProperty("brandId")]
-        public string BrandId { get; set; }
+        [JsonProperty("brand")]
+        public EquipmentBrandDto Brand { get; set; }
 
-        [JsonProperty("typeId")]
-        public string TypeId { get; set; }
-
+        [JsonProperty("type")]
+        public EquipmentTypeDto Type { get; set; }
 
     }
 }

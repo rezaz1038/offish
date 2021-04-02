@@ -43,7 +43,8 @@ namespace SoftIran.DataLayer.Models.Context
         public DbSet<OffishDescription> OffishDescriptions { get; set; }
         public DbSet<OffishTemplate> OffishTemplates { get; set; }
         public DbSet<PGM> PGMs { get; set; }
-
+       // public DbSet<ApplicationClaim>  ApplicationClaims { get; set; }
+        
 
 
     }

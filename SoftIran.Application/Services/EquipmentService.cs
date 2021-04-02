@@ -5,6 +5,9 @@ using SoftIran.Application.Services.IService;
 using SoftIran.Application.ViewModels;
 using SoftIran.Application.ViewModels.Equipment.Query;
 using SoftIran.Application.ViewModels.Equipment.Upsert;
+using SoftIran.Application.ViewModels.EquipmentBrand.Query;
+using SoftIran.Application.ViewModels.EquipmentPlace.Query;
+using SoftIran.Application.ViewModels.EquipmentType.Query;
 using SoftIran.DataLayer.Models.Context;
 using SoftIran.DataLayer.Models.Entities;
 using SoftIran.Insfrastrcture;
@@ -96,9 +99,9 @@ namespace SoftIran.Application.Services
                 var item = new Equipment();
                 item = _mapper.Map<Equipment>(request);
 
-                if (brand != null)   item.Brand = brand;
-                if (type  != null)   item.Type = type;
-                if (place != null)   item.Place = place;
+                if (brand != null) item.Brand = brand;
+                if (type != null) item.Type = type;
+                if (place != null) item.Place = place;
 
                 item.IsActive = true;
                 item.Id = Guid.NewGuid().ToString();
@@ -119,10 +122,50 @@ namespace SoftIran.Application.Services
         public async Task<Response<EquipmentDto>> GetEquipment(string id)
         {
             var item = await _context.Equipment.SingleOrDefaultAsync(x => x.Id == id);
+
+            var itemType =
+               await _context.EquipmentTypes.SingleOrDefaultAsync(x => x.Id == item.TypeId);
+
+            var itemBrand =
+               await _context.EquipmentBrands.SingleOrDefaultAsync(x => x.Id == item.BrandId);
+
+            var itemPlace =
+               await _context.EquipmentPlaces.SingleOrDefaultAsync(x => x.Id == item.PlaceId);
+
             if (item == null)
             {
                 throw new BusinessLogicException("رکوردی یافت نشد");
             }
+            if (itemType == null)
+            {
+                throw new BusinessLogicException("نوع تجهیزات مشخص  نیست ");
+            }
+            if (itemBrand == null)
+            {
+                throw new BusinessLogicException("برند تجهیزات مشخص  نیست");
+            }
+            if (itemPlace == null)
+            {
+                throw new BusinessLogicException("مکان تجهیزات مشخص  نیست");
+            }
+
+            var resultType = new EquipmentTypeDto
+            {
+                Id = itemType.Id,
+                Name = itemType.Name
+            };
+
+            var resultBrand = new EquipmentBrandDto
+            {
+                Id = itemBrand.Id,
+                Name = itemBrand.Name
+            };
+            var resultPlace = new EquipmentPlaceDto
+            {
+                Id = itemPlace.Id,
+                Name = itemPlace.Name
+            };
+
 
             return new Response<EquipmentDto>
             {
@@ -133,15 +176,15 @@ namespace SoftIran.Application.Services
                     Id = item.Id,
                     Name = item.Name,
                     Amval = item.Amval,
-                    BrandId = item.BrandId,
+                    Brand = resultBrand,
                     Description = item.Description,
                     IsActive = item.IsActive,
                     IsInUse = item.IsInUse,
                     Model = item.Model,
-                    PlaceId = item.PlaceId,
+                    Place = resultPlace,
                     Serial = item.Serial,
                     TechnicalCode = item.TechnicalCode,
-                    TypeId = item.TypeId
+                    Type = resultType
 
                 }
             };
@@ -154,7 +197,8 @@ namespace SoftIran.Application.Services
         #region Get Equipment 
         public async Task<Response<EquipmentsDto>> GetEquipments(EquipmentsQuery request)
         {
-            var result = _context.Equipment.AsQueryable();
+            var result = _context.Equipment.Include(t => t.Type).
+                Include(b => b.Brand).Include(p => p.Place).AsQueryable();
 
             ///filtering
             #region filter
@@ -193,23 +237,23 @@ namespace SoftIran.Application.Services
                 result = result.Where(x => x.IsActive == request.IsInUse);
             }
 
-            if (!string.IsNullOrEmpty(request.BrandId))
+            if (!string.IsNullOrEmpty(request.BrandName))
             {
-                result = result.Where(x => x.BrandId.Contains(request.BrandId));
+                result = result.Where(b => b.Brand.Name.Contains(request.BrandName));
             }
 
-            if (!string.IsNullOrEmpty(request.TypeId))
+            if (!string.IsNullOrEmpty(request.TypeName))
             {
-                result = result.Where(x => x.TypeId.Contains(request.TypeId));
+                result = result.Where(x => x.Type.Name.Contains(request.TypeName));
             }
 
-            if (!string.IsNullOrEmpty(request.PlaceId))
+            if (!string.IsNullOrEmpty(request.PlaceName))
             {
-                result = result.Where(x => x.PlaceId.Contains(request.PlaceId));
+                result = result.Where(x => x.Place.Name.Contains(request.PlaceName));
             }
             #endregion
 
-             
+
             ///pagenating
             int take = request.PageSize;
             int skip = (request.PageId - 1) * take;
@@ -218,27 +262,38 @@ namespace SoftIran.Application.Services
 
             var finalResult = result.OrderBy(x => x.Name).Skip(skip).Take(take).AsQueryable();
             //----------------
-             var list = await finalResult.ProjectTo<EquipmentDto>(_mapper.ConfigurationProvider)
-               .ToListAsync();
+            //   var list = await finalResult.ProjectTo<EquipmentDto>(_mapper.ConfigurationProvider).ToListAsync();
             var resultData = new EquipmentsDto
             {
-                Dtos=list,
-                //Dtos = await finalResult.Select(d => new EquipmentDto()
-                //{
-                //    Id = d.Id,
-                //    Name = d.Name,
-                //    Amval = d.Amval,
-                //    BrandId = d.BrandId,
-                //    Description = d.Description,
-                //    IsActive = d.IsActive,
-                //    IsInUse = d.IsInUse,
-                //    Model = d.Model,
-                //    PlaceId = d.PlaceId,
-                //    Serial = d.Serial,
-                //    TechnicalCode = d.TechnicalCode,
-                //    TypeId = d.TypeId
+                //Dtos=list,
+                Dtos = await finalResult.Select(d => new EquipmentDto()
+                {
+                    Id = d.Id,
+                    Name = d.Name,
+                    Amval = d.Amval,
+                    Description = d.Description,
+                    IsActive = d.IsActive,
+                    IsInUse = d.IsInUse,
+                    Model = d.Model,
+                    Serial = d.Serial,
+                    TechnicalCode = d.TechnicalCode,
+                    Type=new EquipmentTypeDto
+                    {
+                        Id=d.Type.Id,
+                        Name=d.Type.Name
+                    },
+                    Brand = new EquipmentBrandDto
+                    {
+                        Id = d.Brand.Id,
+                        Name = d.Brand.Name
+                    },
+                    Place = new EquipmentPlaceDto
+                    {
+                        Id = d.Place.Id,
+                        Name = d.Place.Name
+                    }
 
-                //}).ToListAsync(),
+                }).ToListAsync(),
                 PageId = request.PageId,
                 PageSize = request.PageSize,
                 Total = await result.CountAsync()

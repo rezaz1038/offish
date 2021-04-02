@@ -21,6 +21,7 @@ namespace SoftIran.Application.Profiles
 
             CreateMap<ApplicationUser, UserDto>();
 
+
             CreateMap<Department, DepartmentDto>();
         }
 

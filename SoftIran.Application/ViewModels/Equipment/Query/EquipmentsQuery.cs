@@ -17,9 +17,9 @@ namespace SoftIran.Application.ViewModels.Equipment.Query
         public bool IsActive { get; set; }
         public bool IsInUse { get; set; }
 
-        public string PlaceId { get; set; }
-        public string BrandId { get; set; }
-        public string TypeId { get; set; }
+        public string PlaceName { get; set; }
+        public string BrandName { get; set; }
+        public string TypeName { get; set; }
 
     }
 }
